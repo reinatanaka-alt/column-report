@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コラム月次レポート</title>
+<style>
+  /* =============================================
+     ★ 毎月ここの数字だけ変えてください ★
+     → 下の REPORT_DATA をスクロールして編集
+  ============================================= */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --surface2: #f2f1ee;
+    --border: #e4e3de;
+    --text: #1a1a18;
+    --text2: #6b6b67;
+    --text3: #9b9b96;
+    --green: #2d7a4f;
+    --green-bg: #eaf5ef;
+    --red: #c0392b;
+    --red-bg: #fdf0ee;
+    --amber: #b45309;
+    --amber-bg: #fef3e2;
+    --blue: #1d5fa8;
+    --blue-bg: #eaf1fb;
+    --accent: #1a1a18;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .header .period {
+    font-size: 12px;
+    color: var(--text3);
+  }
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Goal banner */
+  .goal-banner {
+    background: var(--accent);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .goal-banner strong { font-weight: 600; }
+  .goal-arrow { opacity: 0.5; font-size: 12px; }
+
+  /* KPI grid */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .kpi-card.bottleneck { border-color: #f5b8b3; background: #fffaf9; }
+  .kpi-label { font-size: 11px; color: var(--text3); font-weight: 500; letter-spacing: 0.02em; }
+  .kpi-val { font-size: 28px; font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; }
+  .kpi-val .unit { font-size: 14px; font-weight: 400; color: var(--text2); margin-left: 2px; }
+  .kpi-target { font-size: 11px; color: var(--text3); }
+  .kpi-diff { font-size: 12px; font-weight: 600; }
+  .diff-up { color: var(--green); }
+  .diff-dn { color: var(--red); }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    width: fit-content;
+  }
+  .badge-ok { background: var(--green-bg); color: var(--green); }
+  .badge-ng { background: var(--red-bg); color: var(--red); }
+  .badge-warn { background: var(--amber-bg); color: var(--amber); }
+  .badge-info { background: var(--blue-bg); color: var(--blue); }
+
+  /* Section */
+  .section { margin-bottom: 1.5rem; }
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+  }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    letter-spacing: 0.04em;
+    padding: 6px 10px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  .highlight-row td { background: #fff8f7; color: var(--red); font-weight: 600; }
+
+  /* Alert */
+  .alert {
+    border-left: 3px solid var(--red);
+    background: var(--red-bg);
+    padding: 10px 14px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 13px;
+    color: var(--red);
+    margin-top: 12px;
+  }
+  .alert strong { font-weight: 700; }
+
+  /* Two-col grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: right;
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Tag */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .goal-banner { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<script>
+/* ==============================================
+   ★★★ 毎月ここを書き換えてください ★★★
+   数字だけ変えれば自動でレポートが更新されます
+============================================== */
+const DATA = {
+  /* レポートの対象月 */
+  month: "2025年5月",
+
+  /* 目標設定 */
+  goal: {
+    ss:  8200,   // 流入SSの目標
+    ctr: 1.20,   // CTRの目標（%）
+    formSS: 78,  // フォーム到達SSの目標
+    cv:  18,     // BtoB-PC CVの目標
+    totalCv: 35  // Total CVの目標
+  },
+
+  /* 実績 */
+  actual: {
+    ss:     8540,  // 流入SS実績
+    ctr:    0.94,  // CTR実績（%）
+    formSS: 80,    // フォーム到達SS実績
+    cvr:    18.8,  // CVR実績（%）
+    cv:     15,    // BtoB-PC CV実績
+    totalCv: 29    // Total CV実績
+  },
+
+  /* 施策内訳（5月にやったこと） */
+  tactics: [
+    { name: "新規記事",       count: "8本",  note: "検索流入狙い" },
+    { name: "リライト",       count: "5本",  note: "上位表示維持" },
+    { name: "CTA改修",        count: "12本", note: "CTR改善目的" },
+    { name: "内部リンク追加", count: "20本", note: "回遊・到達率UP" },
+  ],
+
+  /* 翌月方針 */
+  nextMonth: {
+    label: "6月の方針",
+    items: [
+      { priority: "高",  badge: "ng",   name: "CTA改修追加",    target: "CTR 1.10%以上" },
+      { priority: "中",  badge: "warn", name: "新規記事",       target: "+800 SS" },
+      { priority: "継続",badge: "ok",   name: "内部リンク最適化", target: "CVR維持" },
+    ]
+  },
+
+  /* 主な所見・コメント（箇条書きで書く） */
+  comments: [
+    "SS・CVRはともに目標達成。ボトルネックはCTR（78%）のみ。",
+    "CTA改修が遅れている記事群で到達率が低い傾向。6月は優先的に対処。",
+    "新規記事8本のうち3本が公開翌月に上位表示。リライト効果も安定。",
+  ]
+};
+/* ============================================
+   ここから下は触らなくてOKです
+============================================ */
+
+function pct(actual, goal) {
+  return Math.round((actual / goal) * 100);
+}
+function sign(val) {
+  return val >= 0 ? `+${val}` : `${val}`;
+}
+function badge(rate, label) {
+  if (rate >= 100) return `<span class="badge badge-ok">✓ 達成 ${rate}%</span>`;
+  if (rate >= 90)  return `<span class="badge badge-warn">△ ${rate}%</span>`;
+  return `<span class="badge badge-ng">✕ 未達 ${rate}%</span>`;
+}
+function badgeByKey(key) {
+  const map = { ok: "badge-ok", ng: "badge-ng", warn: "badge-warn", info: "badge-info" };
+  return map[key] || "badge-info";
+}
+
+const d = DATA;
+const a = d.actual;
+const g = d.goal;
+
+const ssPct    = pct(a.ss, g.ss);
+const ctrPct   = pct(a.ctr, g.ctr);
+const formPct  = pct(a.formSS, g.formSS);
+const cvPct    = pct(a.cv, g.cv);
+const totalPct = pct(a.totalCv, g.totalCv);
+
+const bottleneck = [
+  { label: "SS（流入）",    rate: ssPct,   highlight: false },
+  { label: "CTR（SS→到達）", rate: ctrPct, highlight: true },
+  { label: "CVR（到達→CV）", rate: pct(a.cvr, 18.3), highlight: false },
+].sort((a, b) => a.rate - b.rate)[0].label;
+
+document.write(`
+<div class="header">
+  <h1>コラム月次レポート</h1>
+  <span class="period">集計期間：${d.month}　データソース：GA4</span>
+</div>
+<div class="divider"></div>
+
+<div class="goal-banner">
+  <strong>📌 ${d.month}の目標</strong>
+  <span>流入SS <strong>${g.ss.toLocaleString()}</strong></span>
+  <span class="goal-arrow">→</span>
+  <span>CTR <strong>${g.ctr}%</strong>（フォームSS ${g.formSS}件）</span>
+  <span class="goal-arrow">→</span>
+  <span>BtoB-PC CV <strong>${g.cv}件</strong></span>
+  <span class="goal-arrow">→</span>
+  <span>Total CV <strong>${g.totalCv}件</strong></span>
+  <span style="margin-left:auto;opacity:.7;font-size:12px">主レバー＝CTR改善（CTA改修）</span>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <span class="kpi-label">流入 SS</span>
+    <span class="kpi-val">${a.ss.toLocaleString()}</span>
+    <span class="kpi-target">目標 ${g.ss.toLocaleString()}</span>
+    <span class="kpi-diff ${a.ss >= g.ss ? 'diff-up' : 'diff-dn'}">${sign(a.ss - g.ss)} vs 目標</span>
+    ${badge(ssPct)}
+  </div>
+  <div class="kpi-card">
+    <span class="kpi-label">到達 フォームSS</span>
+    <span class="kpi-val">${a.formSS}<span class="unit">件</span></span>
+    <span class="kpi-target">目標 ${g.formSS}件　CTR ${a.ctr}%</span>
+    <span class="kpi-diff ${a.formSS >= g.formSS ? 'diff-up' : 'diff-dn'}">${sign(a.formSS - g.formSS)} vs 目標</span>
+    ${badge(formPct)}
+  </div>
+  <div class="kpi-card ${ctrPct < 90 ? 'bottleneck' : ''}">
+    <span class="kpi-label">CTR（SS→到達）</span>
+    <span class="kpi-val" style="${ctrPct < 90 ? 'color:var(--red)' : ''}">${a.ctr}%</span>
+    <span class="kpi-target">目標 ${g.ctr}%</span>
+    <span class="kpi-diff diff-dn">${(a.ctr - g.ctr).toFixed(2)}pt 未達</span>
+    ${badge(ctrPct)}
+  </div>
+  <div class="kpi-card">
+    <span class="kpi-label">BtoB-PC CV</span>
+    <span class="kpi-val">${a.cv}<span class="unit">件</span></span>
+    <span class="kpi-target">目標 ${g.cv}件</span>
+    <span class="kpi-diff ${a.cv >= g.cv ? 'diff-up' : 'diff-dn'}">${sign(a.cv - g.cv)} vs 目標</span>
+    ${badge(cvPct)}
+  </div>
+  <div class="kpi-card" style="grid-column: span 2;">
+    <span class="kpi-label">Total CV（全体・最終）</span>
+    <span class="kpi-val">${a.totalCv}<span class="unit">件</span></span>
+    <span class="kpi-target">目標 ${g.totalCv}件</span>
+    <span class="kpi-diff ${a.totalCv >= g.totalCv ? 'diff-up' : 'diff-dn'}">${sign(a.totalCv - g.totalCv)} vs 目標</span>
+    ${badge(totalPct)}
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">CV未達の原因分解（CV ＝ SS × CTR × CVR）</div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:36%">要素</th>
+          <th>実績</th>
+          <th>目標</th>
+          <th>達成率</th>
+          <th>判定</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>量｜SS（流入）</td>
+          <td>${a.ss.toLocaleString()}</td>
+          <td>${g.ss.toLocaleString()}</td>
+          <td>${ssPct}%</td>
+          <td>${badge(ssPct)}</td>
+        </tr>
+        <tr class="${ctrPct < 90 ? 'highlight-row' : ''}">
+          <td>率｜CTR（SS→到達）</td>
+          <td>${a.ctr}%</td>
+          <td>${g.ctr}%</td>
+          <td>${ctrPct}%</td>
+          <td>${badge(ctrPct)}</td>
+        </tr>
+        <tr>
+          <td>率｜CVR（到達→CV）</td>
+          <td>${a.cvr}%</td>
+          <td>18.3%</td>
+          <td>${pct(a.cvr, 18.3)}%</td>
+          <td>${badge(pct(a.cvr, 18.3))}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="alert">
+      <strong>ボトルネック＝${bottleneck}</strong>　量・CVRは達成。CTR改善（CTA改修）が最優先施策。
+    </div>
+  </div>
+</div>
+
+<div class="two-col section">
+  <div>
+    <div class="section-title">施策内訳（${d.month}にやったこと）</div>
+    <div class="card">
+      <table>
+        <thead><tr><th>施策</th><th>本数</th><th>備考</th></tr></thead>
+        <tbody>
+          ${d.tactics.map(t => `<tr><td>${t.name}</td><td>${t.count}</td><td style="color:var(--text2)">${t.note}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div>
+    <div class="section-title">${d.nextMonth.label}</div>
+    <div class="card">
+      <table>
+        <thead><tr><th>優先度</th><th>施策</th><th>目標</th></tr></thead>
+        <tbody>
+          ${d.nextMonth.items.map(i => `
+            <tr>
+              <td><span class="badge ${badgeByKey(i.badge)}">${i.priority}</span></td>
+              <td>${i.name}</td>
+              <td style="color:var(--text2)">${i.target}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">所見・コメント</div>
+  <div class="card">
+    <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:8px">
+      ${d.comments.map(c => `<li style="font-size:13px;line-height:1.6;color:var(--text)">${c}</li>`).join('')}
+    </ul>
+  </div>
+</div>
+
+<div class="footer">集計期間：${d.month}　データソース：GA4　© コラム担当チーム</div>
+`);
+</script>
+
+</div>
+</body>
+</html>
