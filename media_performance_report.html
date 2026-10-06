@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メディア実績レポート - 9月の施策と効果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic Pro', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 40px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #2c3e50;
+            color: #1a1a1a;
+        }
+
+        /* フロー表示 */
+        .flow-bar {
+            background: #2c3e50;
+            color: white;
+            padding: 16px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .flow-bar-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+            min-width: max-content;
+        }
+
+        .flow-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flow-arrow {
+            color: #bdc3c7;
+            font-weight: bold;
+        }
+
+        .metric-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #6c757d;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .metric-unit {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .metric-change {
+            font-size: 12px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .change-up {
+            color: #27ae60;
+        }
+
+        .change-down {
+            color: #e74c3c;
+        }
+
+        .change-label {
+            display: block;
+            color: #6c757d;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        /* チャートセクション */
+        .chart-section {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 12px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .bar-color {
+            background: #a8d5ff;
+        }
+
+        .line-color {
+            width: 3px;
+            height: 12px;
+            background: #e74c3c;
+        }
+
+        /* テーブル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        thead {
+            background: #f0f1f3;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            color: #2c3e50;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        /* インサイト */
+        .insights {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 30px;
+            font-size: 13px;
+        }
+
+        .insights h4 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .insights ul {
+            margin-left: 20px;
+            color: #34495e;
+        }
+
+        .insights li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="font-size: 28px; margin-bottom: 8px; color: #1a1a1a;">9月の施策と効果</h1>
+
+        <!-- フロー表示 -->
+        <div class="flow-bar">
+            <div class="flow-bar-content">
+                <span style="font-weight: 600;">▶ 9月の目標</span>
+                <span class="flow-item">
+                    | 流入SS <span style="font-weight: 600;">50,168</span>
+                </span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-item">
+                    到達CTR <span style="font-weight: 600;">3.71%</span>（登録SS <span style="font-weight: 600;">1,863</span>）
+                </span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-item">
+                    登録率 <span style="font-weight: 600;">0.38%</span>
+                </span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-item">
+                    <span style="font-weight: 600;">主要レバー：到達率(CTR)を上げる = CTA改善</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- 主要メトリクス -->
+        <div class="metric-cards">
+            <div class="metric-card">
+                <div class="metric-label">流入 SS</div>
+                <div class="metric-value">50,168</div>
+                <div class="metric-unit">セッション数</div>
+                <div class="metric-change">
+                    <span class="change-down">↓ -32.9%</span>
+                    <span class="change-label">前月比（74,789→50,168）</span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">到達 CTA 登録</div>
+                <div class="metric-value">1,863</div>
+                <div class="metric-unit">クリック数</div>
+                <div class="metric-change">
+                    <span class="change-down">↓ -30.4%</span>
+                    <span class="change-label">前月比（2,676→1,863）</span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">登録率</div>
+                <div class="metric-value">0.38%</div>
+                <div class="metric-unit">（セッション比）</div>
+                <div class="metric-change">
+                    <span class="change-down">↓ -82.2%</span>
+                    <span class="change-label">前月比（2.13%→0.38%）</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 施策推移チャート1 -->
+        <div class="chart-section">
+            <div class="chart-title">📊 施策推移（セッション数 × CTAクリック数）</div>
+            <div class="chart-container">
+                <svg viewBox="0 0 1000 400" style="overflow: visible;">
+                    <!-- グリッド -->
+                    <g stroke="#e9ecef" stroke-width="1" opacity="0.5">
+                        <line x1="80" y1="80" x2="950" y2="80" />
+                        <line x1="80" y1="140" x2="950" y2="140" />
+                        <line x1="80" y1="200" x2="950" y2="200" />
+                        <line x1="80" y1="260" x2="950" y2="260" />
+                        <line x1="80" y1="320" x2="950" y2="320" />
+                    </g>
+
+                    <!-- 軸 -->
+                    <line x1="80" y1="350" x2="950" y2="350" stroke="#333" stroke-width="2" />
+                    <line x1="80" y1="350" x2="80" y2="50" stroke="#333" stroke-width="2" />
+
+                    <!-- 左軸ラベル（セッション数） -->
+                    <text x="20" y="60" font-size="12" fill="#6c757d" text-anchor="end">160K</text>
+                    <text x="20" y="120" font-size="12" fill="#6c757d" text-anchor="end">120K</text>
+                    <text x="20" y="180" font-size="12" fill="#6c757d" text-anchor="end">80K</text>
+                    <text x="20" y="240" font-size="12" fill="#6c757d" text-anchor="end">40K</text>
+                    <text x="20" y="360" font-size="12" fill="#6c757d" text-anchor="end">0</text>
+
+                    <!-- 右軸ラベル（CTA） -->
+                    <text x="980" y="60" font-size="12" fill="#e74c3c" text-anchor="start">3K</text>
+                    <text x="980" y="120" font-size="12" fill="#e74c3c" text-anchor="start">2.25K</text>
+                    <text x="980" y="180" font-size="12" fill="#e74c3c" text-anchor="start">1.5K</text>
+                    <text x="980" y="240" font-size="12" fill="#e74c3c" text-anchor="start">750</text>
+                    <text x="980" y="360" font-size="12" fill="#e74c3c" text-anchor="start">0</text>
+
+                    <!-- バー（セッション数）：143694, 139912, 154680, 108919, 93986, 80314, 52103, 74789, 50168 -->
+                    <g fill="#a8d5ff">
+                        <rect x="100" y="184" width="35" height="166" />
+                        <rect x="150" y="191" width="35" height="159" />
+                        <rect x="200" y="162" width="35" height="188" />
+                        <rect x="250" y="250" width="35" height="100" />
+                        <rect x="300" y="282" width="35" height="68" />
+                        <rect x="350" y="317" width="35" height="33" />
+                        <rect x="400" y="371" width="35" height="-21" />
+                        <rect x="450" y="264" width="35" height="86" />
+                        <rect x="500" y="386" width="35" height="-36" />
+                    </g>
+
+                    <!-- CTA折れ線：0, 0, 0, 0, 0, 2666, 1936, 2676, 1863 -->
+                    <polyline points="100,350 150,350 200,350 250,350 300,350 350,172 400,242 450,138 500,212"
+                              fill="none" stroke="#e74c3c" stroke-width="3" stroke-linejoin="round" />
+
+                    <!-- CTA折れ線のポイント -->
+                    <g fill="#e74c3c">
+                        <circle cx="350" cy="172" r="4" />
+                        <circle cx="400" cy="242" r="4" />
+                        <circle cx="450" cy="138" r="4" />
+                        <circle cx="500" cy="212" r="4" />
+                    </g>
+
+                    <!-- X軸ラベル（月） -->
+                    <text x="100" y="375" font-size="12" fill="#6c757d" text-anchor="middle">1月</text>
+                    <text x="150" y="375" font-size="12" fill="#6c757d" text-anchor="middle">2月</text>
+                    <text x="200" y="375" font-size="12" fill="#6c757d" text-anchor="middle">3月</text>
+                    <text x="250" y="375" font-size="12" fill="#6c757d" text-anchor="middle">4月</text>
+                    <text x="300" y="375" font-size="12" fill="#6c757d" text-anchor="middle">5月</text>
+                    <text x="350" y="375" font-size="12" fill="#6c757d" text-anchor="middle">6月</text>
+                    <text x="400" y="375" font-size="12" fill="#6c757d" text-anchor="middle">7月</text>
+                    <text x="450" y="375" font-size="12" fill="#6c757d" text-anchor="middle">8月</text>
+                    <text x="500" y="375" font-size="12" fill="#6c757d" text-anchor="middle">9月</text>
+
+                    <!-- 軸ラベル -->
+                    <text x="40" y="30" font-size="12" font-weight="600" fill="#2c3e50">セッション数</text>
+                    <text x="920" y="30" font-size="12" font-weight="600" fill="#e74c3c">CTAクリック</text>
+                </svg>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-color bar-color"></span>
+                    <span>セッション数</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color line-color"></span>
+                    <span>CTAクリック数</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 施策推移チャート2 -->
+        <div class="chart-section">
+            <div class="chart-title">📈 施策推移（仮会員登録率 × 登録率）</div>
+            <div class="chart-container">
+                <svg viewBox="0 0 1000 400" style="overflow: visible;">
+                    <!-- グリッド -->
+                    <g stroke="#e9ecef" stroke-width="1" opacity="0.5">
+                        <line x1="80" y1="80" x2="950" y2="80" />
+                        <line x1="80" y1="140" x2="950" y2="140" />
+                        <line x1="80" y1="200" x2="950" y2="200" />
+                        <line x1="80" y1="260" x2="950" y2="260" />
+                        <line x1="80" y1="320" x2="950" y2="320" />
+                    </g>
+
+                    <!-- 軸 -->
+                    <line x1="80" y1="350" x2="950" y2="350" stroke="#333" stroke-width="2" />
+                    <line x1="80" y1="350" x2="80" y2="50" stroke="#333" stroke-width="2" />
+
+                    <!-- 左軸ラベル（仮会員登録率） -->
+                    <text x="20" y="60" font-size="12" fill="#6c757d" text-anchor="end">4%</text>
+                    <text x="20" y="120" font-size="12" fill="#6c757d" text-anchor="end">3%</text>
+                    <text x="20" y="180" font-size="12" fill="#6c757d" text-anchor="end">2%</text>
+                    <text x="20" y="240" font-size="12" fill="#6c757d" text-anchor="end">1%</text>
+                    <text x="20" y="360" font-size="12" fill="#6c757d" text-anchor="end">0%</text>
+
+                    <!-- 右軸ラベル（登録率） -->
+                    <text x="980" y="60" font-size="12" fill="#e74c3c" text-anchor="start">2.5%</text>
+                    <text x="980" y="120" font-size="12" fill="#e74c3c" text-anchor="start">1.88%</text>
+                    <text x="980" y="180" font-size="12" fill="#e74c3c" text-anchor="start">1.25%</text>
+                    <text x="980" y="240" font-size="12" fill="#e74c3c" text-anchor="start">0.63%</text>
+                    <text x="980" y="360" font-size="12" fill="#e74c3c" text-anchor="start">0%</text>
+
+                    <!-- バー（仮会員登録率）：0, 0, 0, 0, 0, 3.32, 3.72, 3.58, 3.71 -->
+                    <g fill="#a8d5ff">
+                        <rect x="100" y="350" width="35" height="0" />
+                        <rect x="150" y="350" width="35" height="0" />
+                        <rect x="200" y="350" width="35" height="0" />
+                        <rect x="250" y="350" width="35" height="0" />
+                        <rect x="300" y="350" width="35" height="0" />
+                        <rect x="350" y="283" width="35" height="67" />
+                        <rect x="400" y="271" width="35" height="79" />
+                        <rect x="450" y="277" width="35" height="73" />
+                        <rect x="500" y="275" width="35" height="75" />
+                    </g>
+
+                    <!-- 등록率 折れ線：0, 0, 0, 0, 0, 0.75, 0.98, 2.13, 0.38 -->
+                    <polyline points="100,350 150,350 200,350 250,350 300,350 350,325 400,309 450,170 500,337"
+                              fill="none" stroke="#e74c3c" stroke-width="3" stroke-linejoin="round" />
+
+                    <!-- 登録率折れ線のポイント -->
+                    <g fill="#e74c3c">
+                        <circle cx="350" cy="325" r="4" />
+                        <circle cx="400" cy="309" r="4" />
+                        <circle cx="450" cy="170" r="4" />
+                        <circle cx="500" cy="337" r="4" />
+                    </g>
+
+                    <!-- X軸ラベル（月） -->
+                    <text x="100" y="375" font-size="12" fill="#6c757d" text-anchor="middle">1月</text>
+                    <text x="150" y="375" font-size="12" fill="#6c757d" text-anchor="middle">2月</text>
+                    <text x="200" y="375" font-size="12" fill="#6c757d" text-anchor="middle">3月</text>
+                    <text x="250" y="375" font-size="12" fill="#6c757d" text-anchor="middle">4月</text>
+                    <text x="300" y="375" font-size="12" fill="#6c757d" text-anchor="middle">5月</text>
+                    <text x="350" y="375" font-size="12" fill="#6c757d" text-anchor="middle">6月</text>
+                    <text x="400" y="375" font-size="12" fill="#6c757d" text-anchor="middle">7月</text>
+                    <text x="450" y="375" font-size="12" fill="#6c757d" text-anchor="middle">8月</text>
+                    <text x="500" y="375" font-size="12" fill="#6c757d" text-anchor="middle">9月</text>
+
+                    <!-- 軸ラベル -->
+                    <text x="40" y="30" font-size="12" font-weight="600" fill="#2c3e50">仮会員登録率</text>
+                    <text x="920" y="30" font-size="12" font-weight="600" fill="#e74c3c">登録率</text>
+                </svg>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-color bar-color"></span>
+                    <span>仮会員登録率</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color line-color"></span>
+                    <span>登録率</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 詳細データテーブル -->
+        <div class="section-title">月別推移データ</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>月</th>
+                    <th class="text-right">セッション数</th>
+                    <th class="text-right">CTAクリック数</th>
+                    <th class="text-right">仮会員登録率</th>
+                    <th class="text-right">登録率</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2026年01月</td>
+                    <td class="text-right">143,694</td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">0.00%</td>
+                    <td class="text-right">0.00%</td>
+                </tr>
+                <tr>
+                    <td>2026年02月</td>
+                    <td class="text-right">139,912</td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">0.00%</td>
+                    <td class="text-right">0.00%</td>
+                </tr>
+                <tr>
+                    <td>2026年03月</td>
+                    <td class="text-right">154,680</td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">0.00%</td>
+                    <td class="text-right">0.00%</td>
+                </tr>
+                <tr>
+                    <td>2026年04月</td>
+                    <td class="text-right">108,919</td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">0.00%</td>
+                    <td class="text-right">0.00%</td>
+                </tr>
+                <tr>
+                    <td>2026年05月</td>
+                    <td class="text-right">93,986</td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">0.00%</td>
+                    <td class="text-right">0.00%</td>
+                </tr>
+                <tr style="background: #f0f7ff;">
+                    <td style="font-weight: 600;">2026年06月</td>
+                    <td class="text-right" style="font-weight: 600;">80,314</td>
+                    <td class="text-right" style="font-weight: 600;">2,666</td>
+                    <td class="text-right" style="font-weight: 600;">3.32%</td>
+                    <td class="text-right" style="font-weight: 600;">0.75%</td>
+                </tr>
+                <tr>
+                    <td>2026年07月</td>
+                    <td class="text-right">52,103</td>
+                    <td class="text-right">1,936</td>
+                    <td class="text-right">3.72%</td>
+                    <td class="text-right">0.98%</td>
+                </tr>
+                <tr>
+                    <td>2026年08月</td>
+                    <td class="text-right">74,789</td>
+                    <td class="text-right">2,676</td>
+                    <td class="text-right">3.58%</td>
+                    <td class="text-right">2.13%</td>
+                </tr>
+                <tr style="background: #fff3cd;">
+                    <td style="font-weight: 600;">2026年09月</td>
+                    <td class="text-right" style="font-weight: 600;">50,168</td>
+                    <td class="text-right" style="font-weight: 600;">1,863</td>
+                    <td class="text-right" style="font-weight: 600;">3.71%</td>
+                    <td class="text-right" style="font-weight: 600;">0.38%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- インサイト -->
+        <div class="insights">
+            <h4>🔍 主な見解と施策推奨</h4>
+            <ul>
+                <li><span class="highlight">6月から施策導入</span>により、CTA施策（到達～CV化率改善）が開始。以降、登録関連指標が動き始めました。</li>
+                <li><span class="highlight">セッション数の継続的な減少</span>（5月から60%減）は、全体的なトラフィック課題を示唆しています。流入施策の強化が必要。</li>
+                <li>8月に<span class="highlight">登録率が2.13%にスパイク</span>しましたが、9月は0.38%に低下。これは一時的な施策効果の可能性があります。</li>
+                <li><span class="highlight">仮会員登録率は3.3～3.7%で安定</span>していますが、実登録率の改善が課題。フォーム最適化やCTA文言の改善が推奨されます。</li>
+                <li><span class="highlight">主要レバー</span>：流入SS改善（上流施策）+ 到達率改善（CTA改善）+ 登録率改善（フォーム最適化）</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
